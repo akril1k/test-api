@@ -3,7 +3,7 @@
     "endpoints": [
       {
         "endpoint": "/",
-        "description": "The Home endpoint",
+        "description": "General",
         "return": "Hello from students API!",
         "method": "GET",
         "status code": 200
@@ -11,7 +11,7 @@
       {
         "endpoint": "/api",
         "description": "The main endpoint",
-        "return": "It returns this API documentation",
+        "return": "returns this api description ",
         "method": "GET",
         "status code": 200
       },
@@ -34,7 +34,7 @@
       },
       {
         "endpoint": "/api/students/add",
-        "description": "The endpoint creates the new student",
+        "description": "Creates the new student",
         "method": "POST",
         "status code": 201,
         "parameters": {
@@ -42,53 +42,51 @@
             "name": "String",
             "email": "String",
             "age": "Integer",
-            "cellphone": "String"
+            "cellphone": "String-13 symbol"
           }
         }
       },
       {
-        "endpoint": "/api/students/modify/<int:id",
-        "description": "The endpoint updates student partially by ID",
+        "endpoint": "/api/students/modify/<int:id>",
+        "description": "Updates student partially by id",
         "method": "PATCH",
         "status code": {
-          "201": "modified",
-          "400": "no data provided",
-          "404": "no found ID"
+          "201": "modified information",
+          "404": "did not find a student with this id"
         },
         "parameters": {
           "no required all": {
             "name": "String",
             "email": "String",
             "age": "Integer",
-            "cellphone": "String"
+            "cellphone": "String-13 symbol"
           }
         }
       },
       {
         "endpoint": "/api/students/change/<int:id>",
-        "description": "The endpoint updates student by ID",
+        "description": "Updates student by id",
         "method": "PUT",
         "status code": {
           "201": "changed",
-          "400": "no all data provided",
-          "404": "no found ID"
+          "404": "did not find a student with this id"
         },
         "parameters": {
           "required all": {
             "name": "String",
             "email": "String",
             "age": "Integer",
-            "cellphone": "String"
+            "cellphone": "String-13 symbol"
           }
         }
       },
       {
         "endpoint": "/api/students/delete/<int:id>",
-        "description": "The endpoint deletes student by ID",
+        "description": "Deletes student by id",
         "method": "DELETE",
         "status code": {
-          "200": "if ID is existed",
-          "404": "no found ID"
+          "200": "id found and student deleted",
+          "404": "did not find a student with this id"
         }
       },
       {

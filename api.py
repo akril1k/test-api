@@ -1,6 +1,7 @@
 from asyncio.proactor_events import _ProactorBasePipeTransport
 import os
 import json
+from traceback import print_tb
 #import flask_sqlalchemy
 
 from flask import Flask, jsonify, request
@@ -61,9 +62,6 @@ class StudentSchema(Schema):
 def home():
     return '<p>Hello from students API!</p>', 200
  
-#@app.route('/api', methods = ['GET'])
-#def api_main():
- #   return jsonify('Hello, World!'), 200
 
 @app.route('/api', methods = ['GET'])
 def api_main():
@@ -107,7 +105,6 @@ def add_student():
 @app.route('/api/students/modify/<int:id>', methods = ['PATCH'])
 def modify_student(id):
     student = Student.query.get(id)
-    #print(request.json)
     if 'name' in request.json:
         student.name = request.json['name']
     if 'email' in request.json:
@@ -147,9 +144,12 @@ def change_student(id):
 @app.route('/api/students/delete/<int:id>', methods = ['DELETE'])
 def delete_student(id):
     del_student = Student.query.get(id)
+    if not del_student:
+        return jsonify({'result':'did not find a student with this id'}), 404
+    
     Student.delete(del_student)
     db.session.commit()
-    return jsonify({'result':'Congrats successfully removed'}), 200
+    return jsonify({'result':'Student removed'}), 200
 
 
 # health-check OK 200
