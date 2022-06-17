@@ -1,5 +1,6 @@
 from asyncio.proactor_events import _ProactorBasePipeTransport
 import os
+import json
 #import flask_sqlalchemy
 
 from flask import Flask, jsonify, request
@@ -60,9 +61,16 @@ class StudentSchema(Schema):
 def home():
     return '<p>Hello from students API!</p>', 200
  
+#@app.route('/api', methods = ['GET'])
+#def api_main():
+ #   return jsonify('Hello, World!'), 200
+
 @app.route('/api', methods = ['GET'])
 def api_main():
-    return jsonify('Hello, World!'), 200
+    """Main endpoint"""
+    with open('api_descript.json', 'r', encoding='utf-8') as json_file:
+        json_data = json.load(json_file)
+    return jsonify(json_data), 200
  
 @app.route('/api/students', methods=['GET'])
 def get_all_students():
@@ -91,7 +99,71 @@ def add_student():
     serializer = StudentSchema()
     data = serializer.dump(new_student)
     return jsonify(data), 201
+
+
+
+# PATCH
+
+@app.route('/api/students/modify/<int:id>', methods = ['PATCH'])
+def modify_student(id):
+    student = Student.query.get(id)
+    #print(request.json)
+    if 'name' in request.json:
+        student.name = request.json['name']
+    if 'email' in request.json:
+        student.email = request.json['email']
+    if 'age' in request.json:
+        student.age = request.json['age']
+    if 'cellphone' in request.json:
+        student.cellphone = request.json['cellphone']
+    db.session.commit()
+    serializer = StudentSchema()
+    data = serializer.dump(student)
+    return jsonify(data), 201    
  
+#  PUT  
+ 
+@app.route('/api/students/change/<int:id>', methods = ['PUT'])
+def change_student(id):
+    ch_student = Student.query.get(id)
+    name = request.json['name']
+    age = request.json['age']
+    email = request.json['email']
+    cellphone = request.json['cellphone']
+    
+    ch_student.name = name
+    ch_student.age = age
+    ch_student.email = email
+    ch_student.cellphone = cellphone
+    
+    db.session.commit()
+    serializer = StudentSchema()
+    data = serializer.dump(ch_student)
+    return jsonify(data), 201
+
+
+#  DELETE
+
+@app.route('/api/students/delete/<int:id>', methods = ['DELETE'])
+def delete_student(id):
+    del_student = Student.query.get(id)
+    Student.delete(del_student)
+    db.session.commit()
+    return jsonify({'result':'Congrats successfully removed'}), 200
+
+
+# health-check OK 200
+@app.route('/api/health-check/ok', methods=['GET'])
+def page_found():
+    return ('health-check Ok'), 200
+
+# health-check BAD 500
+
+@app.route('/api/health-check/bad', methods=['GET'])
+def page_not_found():
+    return ('health-check bad'), 500
+
+
 if __name__ == '__main__':
     if not database_exists(engine.url):
         create_database(engine.url)
