@@ -1,5 +1,7 @@
 # test-api
-
+    requirements.txt     - package with necessary modules
+    api.py               - application script
+    api_descript.json    - api descriptions
 ## Requirements:
     Python 3
     MySQL (with user ) 
