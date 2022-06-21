@@ -28,7 +28,7 @@ services:
     environment:
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}:3306
       - DB_NAME=${DB_NAME}
     depends_on:
       db:
