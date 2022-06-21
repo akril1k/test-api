@@ -36,15 +36,7 @@
         "endpoint": "/api/students/add",
         "description": "Creates the new student",
         "method": "POST",
-        "status code": 201,
-        "parameters": {
-          "required all": {
-            "name": "String",
-            "email": "String",
-            "age": "Integer",
-            "cellphone": "String-13 symbol"
-          }
-        }
+        "status code": 201
       },
       {
         "endpoint": "/api/students/modify/<int:id>",
