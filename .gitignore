@@ -2,3 +2,4 @@
 venv2/
 .vscode/
 _pycache_/
+key.env
